@@ -1,0 +1,18 @@
+{
+  "name": "typescript_auto_reloader",
+  "version": "1.0.0",
+  "description": "Auto compiler/reloader for typescript",
+  "main": "index.js",
+  "dependencies": {
+    "@types/node": "^14.0.23",
+    "nodemon": "^2.0.4",
+    "typescript": "^3.9.7"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node watcher.js"
+  },
+  "author": "Jesper Åhman <jesha56@live.dk>",
+  "license": "MIT",
+  "repository": "npm/npm"
+}

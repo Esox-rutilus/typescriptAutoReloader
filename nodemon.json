@@ -1,0 +1,11 @@
+{
+  "verbose": true,
+  "ignore": [
+    "bin/*",
+    "node_modules/**/node_modules"
+  ],
+  "execMap": {
+    "tsc": "tsc"
+  },
+  "ext":"ts, js, json"
+}
