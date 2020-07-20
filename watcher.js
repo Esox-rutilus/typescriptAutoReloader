@@ -5,13 +5,17 @@ const fs = require('fs');
 const compileCMD = `nodemon --exec tsc`;
 const StartCompiledServerCMD = `nodemon --config ${path.join(__dirname, 'nodemon_server.json')} index.js`;
 
+watcher();
+
 async function watcher() {
     try {
-        exec(compileCMD);
-        await buildCreated();
+        exec(compileCMD).catch(err => {throw err;});
+        // if (!await buildCreated()) {
+            // }
+        fs.mkdirSync(path.join(__dirname, 'bin', 'debug'), {recursive: true});
         exec(StartCompiledServerCMD, {
             cwd: path.join(__dirname, 'bin', 'debug')
-        })    
+        }).catch(err => {throw err;});
         console.log(`***********WATCHER***********\r\n`);
         console.log(`Watcher have been started.\r\n`);
         console.log(`***********WATCHER***********\r\n`);
@@ -21,32 +25,3 @@ async function watcher() {
         throw err;
     }
 }
-async function buildCreated(attempts = 100) {
-    return new Promise((resolve, reject) => {
-        let testFile = path.join(__dirname, 'bin', 'debug', 'index.js');
-        try {
-            if (attempts > 0) {
-                attempts--;
-                fs.readFileSync(testFile);
-                return resolve();
-            }
-            else {
-                let err = new Error(`No compilation could be found at path ${testFile}`);
-                err.code = 1;
-                return reject(err);
-            }
-        }
-        catch(err) {
-            if(err.code === 'ENOENT') {
-                
-                setTimeout(async () => {
-                    resolve(await buildCreated(attempts));
-                }, 100);
-            }
-            else {
-                return reject(err);
-            }
-        }
-    })
-}
-module.exports = watcher;
